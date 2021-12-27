@@ -1,0 +1,7 @@
+@import url('./varibles.css');
+@import url('./utils.css');
+
+html,
+body {
+  font-family: 'Nunito', sans-serif;
+}
