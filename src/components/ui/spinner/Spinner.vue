@@ -1,13 +1,7 @@
 <template>
-  <div class="loader">
-    <Icon class="loader--fixed">
-      <Loader />
-    </Icon>
-
-    <Icon class="loader--rotate">
-      <LoaderQuarter />
-    </Icon>
-  </div>
+  <Icon class="loader">
+    <Loader />
+  </Icon>
 </template>
 
 <script lang="ts" setup>
@@ -17,19 +11,8 @@
 
 <style scoped>
   .loader {
-    position: relative;
     width: max-content;
     height: max-content;
-    margin-top: 4px;
-  }
-  .loader--fixed {
-    opacity: 0.4;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-  .loader--rotate {
-    opacity: 1;
-    animation: spin 1.5s linear infinite;
+    animation: spin 3s linear infinite;
   }
 </style>

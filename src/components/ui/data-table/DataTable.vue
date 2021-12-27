@@ -1,80 +1,86 @@
 <template>
-  <table class="table">
-    <thead class="table__head" role="rowgroup">
-      <tr role="row">
-        <th v-for="col in columns" :key="col.props?.field" role="cell">
-          <div class="column__header">
-            <span class="column__title">{{ col.props?.header }}</span>
+  <div class="table-wrapper">
+    <table class="table">
+      <thead class="table__head" role="rowgroup">
+        <tr role="row">
+          <th v-for="col in columns" :key="col.props?.field" role="cell">
+            <div class="column__header">
+              <span class="column__title">{{ col.props?.header }}</span>
 
-            <Button
-              v-if="col.props?.sortable"
-              class="column__sortable"
-              size="sm"
-              @click="sort(col.props?.field)"
-            >
-              <Icon>
-                <template v-if="sortBy === col.props?.field">
-                  <SortAscending v-if="sortAsc" />
-                  <SortDescending v-else />
+              <Button
+                v-if="col.props?.sortable"
+                class="column__sortable"
+                size="sm"
+                @click="sort(col.props?.field)"
+              >
+                <Icon>
+                  <template v-if="sortBy === col.props?.field">
+                    <SortAscending v-if="sortAsc" />
+                    <SortDescending v-else />
+                  </template>
+
+                  <template v-else>
+                    <ArrowsSort />
+                  </template>
+                </Icon>
+              </Button>
+
+              <Menu>
+                <template #activator="{ toggle }">
+                  <Button class="column__filter" size="sm" @click="toggle">
+                    <Icon>
+                      <Filter />
+                    </Icon>
+                  </Button>
                 </template>
 
-                <template v-else>
-                  <ArrowsSort />
+                <template #default="{ toggle }">
+                  <InputText placeholder="buscar" @keyup.enter="toggle" />
+
+                  <div class="filter__actions">
+                    <Button @click="toggle"> Cancelar </Button>
+                    <Button color="blue"> Filtrar </Button>
+                  </div>
                 </template>
+              </Menu>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody class="table__body" role="rowgroup">
+        <tr v-for="(item, index) in items" :key="index">
+          <td v-for="col in columns" :key="col.props?.field">
+            <component
+              v-if="hasBody(col.children)"
+              :is="renderBody(col.children)"
+              :data="item"
+            />
+
+            <template v-else>
+              {{ item[col.props?.field] }}
+            </template>
+          </td>
+        </tr>
+
+        <tr v-if="items.length === 0">
+          <td :colspan="columns.length">
+            <div class="table__empty">
+              <Icon size="48" color="gray">
+                <Database />
               </Icon>
-            </Button>
 
-            <Menu>
-              <template #activator="{ toggle }">
-                <Button class="column__filter" size="sm" @click="toggle">
-                  <Icon>
-                    <Filter />
-                  </Icon>
-                </Button>
-              </template>
+              <span>No hay registro</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-              <template #default="{ toggle }">
-                <InputText placeholder="buscar" @keyup.enter="toggle" />
-
-                <div class="filter__actions">
-                  <Button @click="toggle"> Cancelar </Button>
-                  <Button color="blue"> Filtrar </Button>
-                </div>
-              </template>
-            </Menu>
-          </div>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody class="table__body" role="rowgroup">
-      <tr v-for="(item, index) in items" :key="index">
-        <td v-for="col in columns" :key="col.props?.field">
-          <component
-            v-if="hasBody(col.children)"
-            :is="renderBody(col.children)"
-            :data="item"
-          />
-
-          <template v-else>
-            {{ item[col.props?.field] }}
-          </template>
-        </td>
-      </tr>
-
-      <tr v-if="items.length === 0">
-        <td :colspan="columns.length">
-          <div class="table__empty">
-            <Icon size="48" color="gray">
-              <Database />
-            </Icon>
-
-            <span>No hay registro</span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div v-if="loading" class="table__loader">
+      <Spinner />
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -92,6 +98,7 @@
   import Button from '../button/Button.vue'
   import Menu from '../menu/Menu.vue'
   import InputText from '../input/InputText.vue'
+  import Spinner from '../spinner/Spinner.vue'
 
   interface Item {
     [k: string]: string | number | boolean | Item
@@ -103,6 +110,7 @@
 
   const props = defineProps({
     data: { type: Array as PropType<Item[]>, default: () => [] },
+    loading: { type: Boolean, default: false },
   })
 
   function getChildren() {
@@ -136,6 +144,22 @@
 </script>
 
 <style scoped>
+  .table-wrapper {
+    position: relative;
+  }
+  .table__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+  }
   .table {
     width: 100%;
     height: 100%;

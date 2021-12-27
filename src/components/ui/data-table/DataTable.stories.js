@@ -63,7 +63,7 @@ const Template = (args) => ({
 })
 
 export const Empty = Template.bind({})
-Empty.args = { data: [] }
+Empty.args = { data: [], loading: false }
 
 export const Full = Template.bind({})
-Full.args = { data }
+Full.args = { data, loading: false }
