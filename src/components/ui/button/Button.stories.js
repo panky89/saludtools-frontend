@@ -67,3 +67,9 @@ OnlyText.args = { color: 'gray', size: 'md' }
 
 export const IconText = TemplateIconText.bind({})
 IconText.args = { color: 'gray', size: 'md' }
+
+export const IconTextDisabled = TemplateIconText.bind({})
+IconTextDisabled.args = { color: 'gray', size: 'md', disabled: true }
+
+export const IconTextLoading = TemplateIconText.bind({})
+IconTextLoading.args = { color: 'gray', size: 'md', loading: true }
