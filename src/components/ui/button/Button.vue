@@ -13,23 +13,14 @@
     </div>
 
     <div v-if="loading" class="button__loader">
-      <div class="button__loader-icon">
-        <Icon class="button__loader--fixed">
-          <Loader />
-        </Icon>
-
-        <Icon class="button__loader--rotate">
-          <LoaderQuarter />
-        </Icon>
-      </div>
+      <Spinner />
     </div>
   </button>
 </template>
 
 <script lang="ts" setup>
   import { PropType } from 'vue'
-  import { Icon } from '@vicons/utils'
-  import { Loader, LoaderQuarter } from '@vicons/tabler'
+  import Spinner from '../spinner/Spinner.vue'
 
   type Color = 'blue' | 'gray' | 'red' | 'green'
   type Size = 'sm' | 'md' | 'lg'
@@ -59,11 +50,11 @@
   }
   .button-md {
     font-size: 0.85rem;
-    height: 1.5rem;
+    height: 1.65rem;
   }
   .button-lg {
     font-size: 1rem;
-    height: 1.75rem;
+    height: 2rem;
   }
   .button-blue {
     color: white;
@@ -106,20 +97,5 @@
   .button__disabled--loader {
     opacity: 0;
     cursor: not-allowed;
-  }
-  .button__loader-icon {
-    position: relative;
-    width: max-content;
-    height: max-content;
-  }
-  .button__loader--fixed {
-    opacity: 0.4;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-  .button__loader--rotate {
-    opacity: 1;
-    animation: spin 1.5s linear infinite;
   }
 </style>
