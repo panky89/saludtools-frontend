@@ -4,6 +4,7 @@
     :class="{
       [`button-${color}`]: true,
       [`button-${size}`]: true,
+      [`button__block`]: block,
       'px-4': !onlyIcon,
       'button__only-icon': onlyIcon,
     }"
@@ -27,7 +28,7 @@
   import { PropType } from 'vue'
   import Spinner from '../spinner/Spinner.vue'
 
-  type Color = 'blue' | 'gray' | 'red' | 'green'
+  type Color = 'blue' | 'gray' | 'red' | 'green' | 'transparent'
   type Size = 'sm' | 'md' | 'lg'
   type Type = 'button' | 'submit' | 'reset'
 
@@ -35,6 +36,7 @@
     color: { type: String as PropType<Color>, default: 'gray' },
     size: { type: String as PropType<Size>, default: 'md' },
     type: { type: String as PropType<Type>, default: 'button' },
+    block: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },
     onlyIcon: { type: Boolean, default: false },
@@ -48,6 +50,7 @@
     border-radius: 0.25rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
   }
   .button-sm {
@@ -77,6 +80,11 @@
   .button-green {
     color: white;
     background-color: var(--green);
+  }
+  .button-transparent {
+    color: rgb(100, 100, 100);
+    background-color: transparent;
+    border: 1px solid rgb(224, 224, 224);
   }
   .button:hover {
     opacity: 0.8;
@@ -111,5 +119,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .button__block {
+    width: 100%;
   }
 </style>

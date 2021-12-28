@@ -107,6 +107,7 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
+    padding: 1rem;
   }
   .modal {
     background-color: white;

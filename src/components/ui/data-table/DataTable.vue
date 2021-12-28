@@ -26,7 +26,12 @@
       <table class="table">
         <thead class="table__head" role="rowgroup">
           <tr role="row">
-            <th v-for="col in columns" :key="col.props?.field" role="cell">
+            <th
+              v-for="col in columns"
+              :key="col.props?.field"
+              :style="{ width: col.props?.width }"
+              role="cell"
+            >
               <div class="column__header">
                 <span class="column__title">{{ col.props?.header }}</span>
 
@@ -200,6 +205,9 @@
 <style scoped>
   .table-wrapper {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   .table__content {
     overflow-x: auto;

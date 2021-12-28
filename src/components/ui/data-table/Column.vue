@@ -6,5 +6,6 @@
     header: { type: String, required: true },
     sortable: { type: Boolean, default: false },
     filterable: { type: Boolean, default: false },
+    width: { type: String, default: 'auto' },
   })
 </script>

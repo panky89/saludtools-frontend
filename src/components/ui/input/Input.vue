@@ -2,7 +2,7 @@
   <div class="field">
     <div
       class="input-wrapper"
-      :style="{ height: type === 'area' ? '100%' : '40px' }"
+      :style="{ height: type === 'area' ? '100%' : '60px' }"
     >
       <label
         class="input-label"
@@ -90,7 +90,7 @@
     background-color: rgb(240, 240, 240);
     border-radius: 4px;
     border: 2px solid transparent;
-    border-top-width: 6px;
+    border-top-width: 10px;
     border-bottom-width: px;
     width: max-content;
     transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
