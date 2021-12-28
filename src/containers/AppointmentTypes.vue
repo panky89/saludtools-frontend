@@ -1,5 +1,5 @@
 <template>
-  <ModalFormCreateAppointmentType @refresh="getAppointmentTypes" />
+  <ModalFormCreateAppointmentType @refresh="getAppointmentTypes()" />
 
   <DataTable
     paginator
@@ -61,6 +61,15 @@
         </Icon>
       </template>
     </Column>
+
+    <Column filed="actions">
+      <template #body="{ data }">
+        <ModalFormUpdateAppointmentType
+          :appointmentType="data"
+          @refresh="getAppointmentTypes()"
+        />
+      </template>
+    </Column>
   </DataTable>
 </template>
 
@@ -70,6 +79,7 @@
 
   import ModalFormCreateAppointmentType from '@/components/ModalFormCreateAppointmentType.vue'
   import useGetAppointmentTypes from '@/hooks/useGetAppointmentTypes'
+  import ModalFormUpdateAppointmentType from '@/components/ModalFormUpdateAppointmentType.vue'
 
   const { appointmentTypes, meta, getAppointmentTypes, isFetching, params } =
     useGetAppointmentTypes()

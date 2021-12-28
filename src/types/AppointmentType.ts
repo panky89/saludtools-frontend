@@ -12,6 +12,14 @@ export interface AppointmentType {
 export interface CreateAppointmentTypeRequest {
   name: string
   description: string
-  duration: number | null
+  duration: number
   color: string
+}
+
+export interface UpdateAppointmentTypeRequest {
+  name?: string
+  description?: string
+  duration?: number
+  color?: string
+  active?: boolean
 }

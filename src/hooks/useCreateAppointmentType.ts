@@ -18,7 +18,7 @@ export default function () {
     name: '',
     description: '',
     duration: 30,
-    color: '#000000',
+    color: '#ffffff',
   }
   const form = useForm<CreateAppointmentTypeRequest>({
     validationSchema,
