@@ -111,7 +111,7 @@
     margin: auto;
     width: 100%;
     height: fit-content;
-    max-width: 100vw;
+    max-width: 90%;
     padding: 2rem;
     border-radius: 0.25rem;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
