@@ -69,7 +69,11 @@
                   </template>
 
                   <template #default="{ toggle }">
-                    <Input placeholder="buscar" @keyup.enter="toggle" />
+                    <input
+                      class="filter__search"
+                      placeholder="buscar"
+                      @keyup.enter="toggle"
+                    />
 
                     <div class="filter__actions mt-2">
                       <Button @click="toggle"> Cancelar </Button>
@@ -128,7 +132,6 @@
 
   import Button from '../button/Button.vue'
   import Menu from '../menu/Menu.vue'
-  import Input from '../input/Input.vue'
   import Paginator from '../paginator/Paginator.vue'
 
   interface Item {
@@ -291,6 +294,11 @@
     transform-origin: 0% 50%;
   }
 
+  .filter__search {
+    border: 1px solid var(--gray);
+    padding: 0.75rem;
+  }
+
   @keyframes indeterminate {
     0% {
       transform: translateX(0) scaleX(0);
@@ -300,11 +308,6 @@
     }
     100% {
       transform: translateX(100%) scaleX(0.5);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .table__actions {
     }
   }
 </style>
