@@ -12,7 +12,7 @@
                 class="column__sortable"
                 size="sm"
                 onlyIcon
-                @click="sort(col.props?.field)"
+                @click="onSort(col.props?.field)"
               >
                 <Icon>
                   <template v-if="sortBy === col.props?.field">
@@ -83,6 +83,28 @@
       </tbody>
     </table>
 
+    <div class="table__actions">
+      <Paginator
+        :currentPage="currentPage"
+        :pages="pages"
+        @change="onChangePage"
+      />
+
+      <div class="flex items-center">
+        <span class="mr-4">Por pagina</span>
+
+        <select
+          class="table_per-pages"
+          :value="rowsPerPage"
+          @change="onChangeRowsPerPage"
+        >
+          <option v-for="item in rowsPerPageOptions" :key="item" :value="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+    </div>
+
     <div v-if="loading" class="table__loader">
       <Spinner />
     </div>
@@ -105,6 +127,7 @@
   import Menu from '../menu/Menu.vue'
   import Input from '../input/Input.vue'
   import Spinner from '../spinner/Spinner.vue'
+  import Paginator from '../paginator/Paginator.vue'
 
   interface Item {
     [k: string]: string | number | boolean | Item
@@ -114,9 +137,18 @@
   const sortBy = ref()
   const slots = useSlots()
 
+  const emit = defineEmits(['changePage', 'changeRowsPerPage', 'changeSort'])
   const props = defineProps({
     data: { type: Array as PropType<Item[]>, default: () => [] },
     loading: { type: Boolean, default: false },
+    paginator: { type: Boolean, default: false },
+    currentPage: { type: Number, default: 1 },
+    rows: { type: Number, default: 1 },
+    rowsPerPage: { type: Number, default: 10 },
+    rowsPerPageOptions: {
+      type: Array as PropType<Array<number>>,
+      default: () => [10, 25, 50],
+    },
   })
 
   function getChildren() {
@@ -131,9 +163,23 @@
     return children.body
   }
 
-  function sort(field: string) {
+  function onSort(field: string) {
     sortBy.value = field
     sortAsc.value = !sortAsc.value
+
+    const type = sortAsc.value ? 'asc' : 'desc'
+    emit('changeSort', field, type)
+  }
+
+  function onChangePage(page: number) {
+    emit('changePage', page)
+  }
+
+  function onChangeRowsPerPage(e: Event) {
+    const target = e.target as HTMLSelectElement
+    const value = parseInt(target.value)
+
+    emit('changeRowsPerPage', value)
   }
 
   const items = computed(() => {
@@ -146,6 +192,11 @@
     const children = getChildren()
 
     return children.filter((c) => typeof c.type === 'object')
+  })
+
+  const pages = computed(() => {
+    const value = props.rows / props.rowsPerPage
+    return Math.trunc(value + 1)
   })
 </script>
 
@@ -202,5 +253,19 @@
     display: flex;
     justify-content: flex-end;
     gap: 0.25rem;
+  }
+  .table__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .table_per-pages {
+    border: none;
+    background-color: var(--gray);
+    border-radius: 4px;
+    padding: 0.5rem;
+  }
+  .table_per-pages:hover {
+    opacity: 0.7;
   }
 </style>
