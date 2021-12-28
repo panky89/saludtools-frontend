@@ -8,7 +8,7 @@
       </Button>
     </li>
     <li>
-      <Button only-icon @click="prevPage()">
+      <Button only-icon :disabled="currentPage === 1" @click="prevPage()">
         <Icon>
           <ChevronLeft />
         </Icon>
@@ -26,7 +26,7 @@
     </li>
 
     <li>
-      <Button only-icon @click="nextPage()">
+      <Button only-icon :disabled="currentPage === pages" @click="nextPage()">
         <Icon>
           <ChevronRight />
         </Icon>
@@ -67,7 +67,7 @@
   }
 
   function prevPage() {
-    emit('change', props.currentPage + 1)
+    emit('change', props.currentPage - 1)
   }
 
   function lastPage() {
