@@ -20,14 +20,14 @@ const TemplateForm = (args) => ({
     return { args: args }
   },
   template: `<form>
-  <InputText label="name" placeholder="Nombre" />
-  <InputText label="description" placeholder="Descripcion" />
-  <InputText label="duration" placeholder="Duracion" />
+  <InputText label="name" placeholder="Nombre" class="mt-4" />
+  <InputText label="description" placeholder="Descripcion" class="mt-4" />
+  <InputText label="duration" placeholder="Duracion" class="mt-4" />
   </form>`,
 })
 
 export const Text = Template.bind({})
-Text.args = { placeholder: 'placeholder' }
+Text.args = { placeholder: 'Search' }
 
 export const Form = TemplateForm.bind({})
 Form.args = {}

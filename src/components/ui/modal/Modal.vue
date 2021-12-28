@@ -4,7 +4,7 @@
   <teleport to="body">
     <transition name="fade" appear mode="out-in">
       <div v-if="isOpen" class="modal-wrapper" @click="isOpen = false">
-        <div class="modal" @click.stop>
+        <div class="modal" :class="{ [`modal__${size}`]: true }" @click.stop>
           <button class="button__close" @click="isOpen = false">
             <Icon>
               <X />
@@ -45,14 +45,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { PropType, ref } from 'vue'
   import { Icon } from '@vicons/utils'
   import { X } from '@vicons/tabler'
 
   import Button from '../button/Button.vue'
 
+  type Size = 'sm' | 'md' | 'lg' | 'full'
+
   defineProps({
     modalValue: { type: Boolean, default: false },
+    size: { type: String as PropType<Size>, default: 'md' },
     title: { type: String, default: '' },
   })
 
@@ -84,12 +87,25 @@
     position: relative;
     gap: 1rem;
     max-width: 100vw;
-    width: max-content;
+    width: 100%;
+  }
+  .modal__sm {
+    max-width: 15vw;
+  }
+  .modal__md {
+    max-width: 30vw;
+  }
+  .modal__lg {
+    max-width: 30rem;
+  }
+  .modal__full {
+    max-width: 100%;
+    height: 100vh;
   }
   .button__close {
     position: absolute;
-    top: 0.25rem;
-    right: 0;
+    top: 1rem;
+    right: 0.75rem;
     border: none;
     background-color: transparent;
     font-size: 20px;
