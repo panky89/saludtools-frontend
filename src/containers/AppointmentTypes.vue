@@ -22,6 +22,8 @@
 
     <Column field="name" header="Nombre" sortable filterable></Column>
 
+    <Column field="duration" header="Duracion (min)" sortable></Column>
+
     <Column field="description" header="Descripcion" sortable></Column>
 
     <Column field="created_at" header="Creado" sortable>
