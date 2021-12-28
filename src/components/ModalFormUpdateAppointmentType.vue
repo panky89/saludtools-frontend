@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model="isOpen" title="Crear nueva tipo cita" hideFooter>
+  <Modal v-model="isOpen" title="Editar tipo cita" hideFooter>
     <template #activator="{ toggle }">
       <Button color="gray" @click="toggle">
         <Icon>

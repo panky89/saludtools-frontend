@@ -71,10 +71,17 @@
 
       <Column filed="actions">
         <template #body="{ data }">
-          <ModalFormUpdateAppointmentType
-            :appointmentType="data"
-            @refresh="getAppointmentTypes()"
-          />
+          <div class="flex gap-2">
+            <ModalFormUpdateAppointmentType
+              :appointmentType="data"
+              @refresh="getAppointmentTypes()"
+            />
+
+            <ModalFormRemoveAppointmentType
+              :appointmentTypeId="data.id"
+              @refresh="getAppointmentTypes()"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>
@@ -85,9 +92,9 @@
   import { Icon } from '@vicons/utils'
   import { CircleCheck } from '@vicons/tabler'
 
-  import Button from '@/components/ui/button/Button.vue'
   import ModalFormCreateAppointmentType from '@/components/ModalFormCreateAppointmentType.vue'
   import ModalFormUpdateAppointmentType from '@/components/ModalFormUpdateAppointmentType.vue'
+  import ModalFormRemoveAppointmentType from '@/components/ModalFormRemoveAppointmentType.vue'
 
   import { AppointmentType } from '@/types/AppointmentType'
   import useGetAppointmentTypes from '@/hooks/useGetAppointmentTypes'

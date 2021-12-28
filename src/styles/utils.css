@@ -785,3 +785,7 @@
 .text-justify {
   text-align: justify;
 }
+
+.gap-2 {
+  gap: 2px;
+}
