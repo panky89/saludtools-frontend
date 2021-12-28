@@ -3,7 +3,7 @@
 
   <teleport to="body">
     <transition name="fade" appear mode="out-in">
-      <div v-if="isOpen" class="modal-wrapper" @click="isOpen = false">
+      <div v-if="isOpen" class="modal-wrapper" @click="close()">
         <div class="modal" :class="{ [`modal__${size}`]: true }" @click.stop>
           <button class="button__close" @click="isOpen = false">
             <Icon>
@@ -11,7 +11,7 @@
             </Icon>
           </button>
 
-          <header class="modal__header">
+          <header v-if="!hideHeader" class="modal__header">
             <slot
               v-if="$slots.header"
               :toggle="toggle"
@@ -25,7 +25,7 @@
             <slot :toggle="toggle" :isOpen="isOpen"></slot>
           </div>
 
-          <footer class="modal_footer">
+          <footer v-if="!hideFooter" class="modal_footer">
             <slot
               v-if="$slots.footer"
               :toggle="toggle"
@@ -34,8 +34,8 @@
             ></slot>
 
             <div v-else class="modal__actions">
-              <Button @click="isOpen = false">Cancelar</Button>
-              <Button color="blue">Aceptar</Button>
+              <Button @click="cancel()">Cancelar</Button>
+              <Button color="blue" @click="accept()">Aceptar</Button>
             </div>
           </footer>
         </div>
@@ -57,12 +57,31 @@
     modalValue: { type: Boolean, default: false },
     size: { type: String as PropType<Size>, default: 'md' },
     title: { type: String, default: '' },
+    hideFooter: { type: Boolean, default: false },
+    hideHeader: { type: Boolean, default: false },
   })
 
+  const emit = defineEmits(['accept', 'cancel', 'close'])
   const isOpen = ref(false)
 
   function toggle() {
     isOpen.value = !isOpen.value
+  }
+
+  function accept() {
+    emit('accept')
+    isOpen.value = false
+  }
+
+  function cancel() {
+    emit('cancel')
+    emit('close')
+    isOpen.value = false
+  }
+
+  function close() {
+    emit('close')
+    isOpen.value = false
   }
 </script>
 
@@ -125,6 +144,6 @@
     padding: 0;
   }
   .modal__body {
-    padding: 1rem 0;
+    padding: 0.25rem 0;
   }
 </style>
