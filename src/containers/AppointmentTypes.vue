@@ -14,7 +14,11 @@
     @changeRowsPerPage="onChangeRowsPerPage"
     class="mt-10"
   >
-    <Column field="id" header="Id" sortable></Column>
+    <Column field="id" header="Id" sortable>
+      <template #body="{ data }">
+        <strong>{{ data.id }}</strong>
+      </template>
+    </Column>
 
     <Column field="name" header="Nombre" sortable filterable></Column>
 
@@ -32,11 +36,36 @@
       </template>
     </Column>
 
-    <Column field="active" header="Activo"></Column>
+    <Column field="color" header="Color">
+      <template #body="{ data }">
+        <div class="flex items-center">
+          <div
+            :style="{
+              backgroundColor: data.color,
+              border: '1px solid gray',
+              width: '24px',
+              height: '24px',
+            }"
+          ></div>
+          <span class="ml-4">{{ data.color }}</span>
+        </div>
+      </template>
+    </Column>
+
+    <Column field="active" header="Activo">
+      <template #body="{ data }">
+        <Icon size="24" :color="data.active ? '#16a34a' : '#d2d2d2'">
+          <CircleCheck />
+        </Icon>
+      </template>
+    </Column>
   </DataTable>
 </template>
 
 <script lang="ts" setup>
+  import { Icon } from '@vicons/utils'
+  import { CircleCheck } from '@vicons/tabler'
+
   import ModalFormCreateAppointmentType from '@/components/ModalFormCreateAppointmentType.vue'
   import useGetAppointmentTypes from '@/hooks/useGetAppointmentTypes'
 

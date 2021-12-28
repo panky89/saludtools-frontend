@@ -13,4 +13,5 @@ export interface CreateAppointmentTypeRequest {
   name: string
   description: string
   duration: number | null
+  color: string
 }

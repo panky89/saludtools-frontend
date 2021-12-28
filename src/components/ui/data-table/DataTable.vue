@@ -203,6 +203,7 @@
 <style scoped>
   .table-wrapper {
     position: relative;
+    overflow-x: auto;
   }
   .table__loader {
     position: absolute;
@@ -258,6 +259,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
   }
   .table_per-pages {
     border: none;

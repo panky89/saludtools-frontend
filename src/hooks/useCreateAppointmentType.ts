@@ -12,11 +12,13 @@ export default function () {
     name: yup.string().required(),
     description: yup.string().required(),
     duration: yup.number().positive().integer().required(),
+    color: yup.string().required(),
   })
   const initialValues = {
     name: '',
     description: '',
-    duration: null,
+    duration: 30,
+    color: '#000000',
   }
   const form = useForm<CreateAppointmentTypeRequest>({
     validationSchema,

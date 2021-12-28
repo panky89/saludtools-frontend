@@ -108,21 +108,8 @@
     grid-template-rows: auto 1fr auto;
     position: relative;
     gap: 1rem;
-    max-width: 100vw;
     width: 100%;
-  }
-  .modal__sm {
-    max-width: 15vw;
-  }
-  .modal__md {
-    max-width: 30vw;
-  }
-  .modal__lg {
-    max-width: 30rem;
-  }
-  .modal__full {
-    max-width: 100%;
-    height: 100vh;
+    max-width: 100vw;
   }
   .button__close {
     position: absolute;
@@ -148,5 +135,21 @@
   }
   .modal__body {
     padding: 0.25rem 0;
+  }
+
+  @media (min-width: 1024px) {
+    .modal__sm {
+      max-width: 15vw;
+    }
+    .modal__md {
+      max-width: 30vw;
+    }
+    .modal__lg {
+      max-width: 30rem;
+    }
+    .modal__full {
+      max-width: 100%;
+      height: 100vh;
+    }
   }
 </style>
