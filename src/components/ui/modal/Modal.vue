@@ -3,7 +3,7 @@
 
   <teleport to="body">
     <transition name="fade" appear mode="out-in">
-      <div v-if="isOpen" class="modal-wrapper" @click="close()">
+      <div v-if="isOpen" class="modal-wrapper" @click="isOpen = false">
         <div class="modal" :class="{ [`modal__${size}`]: true }" @click.stop>
           <button class="button__close" @click="isOpen = false">
             <Icon>
@@ -60,7 +60,13 @@
     hideHeader: { type: Boolean, default: false },
   })
 
-  const emit = defineEmits(['accept', 'cancel', 'close', 'update:modelValue'])
+  const emit = defineEmits([
+    'accept',
+    'cancel',
+    'open',
+    'close',
+    'update:modelValue',
+  ])
   const isOpen = ref(false)
 
   function toggle() {
@@ -74,18 +80,20 @@
 
   function cancel() {
     emit('cancel')
-    emit('close')
-    isOpen.value = false
-  }
-
-  function close() {
-    emit('close')
     isOpen.value = false
   }
 
   watch(props, () => (isOpen.value = props.modelValue))
 
-  watch(isOpen, () => emit('update:modelValue', isOpen.value))
+  watch(isOpen, () => {
+    emit('update:modelValue', isOpen.value)
+
+    if (isOpen.value) {
+      emit('open')
+    } else {
+      emit('close')
+    }
+  })
 </script>
 
 <style scoped>

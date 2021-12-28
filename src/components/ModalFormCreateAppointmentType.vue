@@ -1,5 +1,10 @@
 <template>
-  <Modal v-model="isOpen" title="Crear nueva tipo cita" hideFooter>
+  <Modal
+    v-model="isOpen"
+    title="Crear nueva tipo cita"
+    hideFooter
+    @open="resetForm()"
+  >
     <template #activator="{ toggle }">
       <Button color="blue" @click="toggle">Crear nueva tipo cita</Button>
     </template>
@@ -66,7 +71,7 @@
   const isOpen = ref(false)
 
   const { form, isFetching, createAppointment } = useCreateAppointmentType()
-  const { values, validate, meta, errors } = form
+  const { values, validate, meta, errors, resetForm } = form
 
   async function onSubmit() {
     if (!(await validate())) return
