@@ -89,9 +89,9 @@
   }
   .form__fields {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    grid-template-areas: 'name duration color' 'description description description';
+    grid-template-areas: 'name name' 'duration color' 'description description';
   }
   .form__name {
     grid-area: name;
@@ -104,5 +104,12 @@
   }
   .form__duration {
     grid-area: duration;
+  }
+
+  @media (min-width: 1024px) {
+    .form__fields {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas: 'name duration color' 'description description description';
+    }
   }
 </style>

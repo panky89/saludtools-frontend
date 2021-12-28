@@ -1,51 +1,56 @@
 <template>
   <slot :toggle="toggle" :isOpen="isOpen" name="activator"></slot>
 
-  <teleport to="body">
-    <transition name="fade" appear mode="out-in">
-      <div v-if="isOpen" class="modal-wrapper" @click="isOpen = false">
-        <div class="modal" :class="{ [`modal__${size}`]: true }" @click.stop>
-          <button class="button__close" @click="isOpen = false">
-            <Icon>
-              <X />
-            </Icon>
-          </button>
+  <transition name="fade" appear>
+    <div v-if="isOpen" class="modal__overlay" @click="isOpen = false"></div>
+  </transition>
 
-          <header v-if="!hideHeader" class="modal__header">
-            <slot
-              v-if="$slots.header"
-              :toggle="toggle"
-              :isOpen="isOpen"
-              name="header"
-            ></slot>
-            <h2 v-else-if="title" class="modal__title">{{ title }}</h2>
-          </header>
+  <transition name="pop" appear>
+    <div
+      v-if="isOpen"
+      class="modal"
+      :class="{ [`modal__${size}`]: true }"
+      @click.stop
+    >
+      <button class="button__close" @click="isOpen = false">
+        <Icon>
+          <X />
+        </Icon>
+      </button>
 
-          <div class="modal__body">
-            <slot :toggle="toggle" :isOpen="isOpen"></slot>
-          </div>
+      <header v-if="!hideHeader" class="modal__header">
+        <slot
+          v-if="$slots.header"
+          :toggle="toggle"
+          :isOpen="isOpen"
+          name="header"
+        ></slot>
+        <h2 v-else-if="title" class="modal__title">{{ title }}</h2>
+      </header>
 
-          <footer v-if="!hideFooter" class="modal_footer">
-            <slot
-              v-if="$slots.footer"
-              :toggle="toggle"
-              :isOpen="isOpen"
-              name="footer"
-            ></slot>
-
-            <div v-else class="modal__actions">
-              <Button @click="cancel()">Cancelar</Button>
-              <Button color="blue" @click="accept()">Aceptar</Button>
-            </div>
-          </footer>
-        </div>
+      <div class="modal__body">
+        <slot :toggle="toggle" :isOpen="isOpen"></slot>
       </div>
-    </transition>
-  </teleport>
+
+      <footer v-if="!hideFooter" class="modal_footer">
+        <slot
+          v-if="$slots.footer"
+          :toggle="toggle"
+          :isOpen="isOpen"
+          name="footer"
+        ></slot>
+
+        <div v-else class="modal__actions">
+          <Button @click="cancel()">Cancelar</Button>
+          <Button color="blue" @click="accept()">Aceptar</Button>
+        </div>
+      </footer>
+    </div>
+  </transition>
 </template>
 
 <script lang="ts" setup>
-  import { PropType, ref, watch, watchEffect } from 'vue'
+  import { PropType, ref, watch } from 'vue'
   import { Icon } from '@vicons/utils'
   import { X } from '@vicons/tabler'
   import Button from '../button/Button.vue'
@@ -97,28 +102,30 @@
 </script>
 
 <style scoped>
-  .modal-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .modal {
     position: fixed;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
+    margin: auto;
+    width: 100%;
+    height: fit-content;
+    max-width: 100vw;
+    padding: 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    z-index: 1;
+  }
+  .modal__overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 1rem;
-  }
-  .modal {
-    background-color: white;
-    border-radius: 0.25rem;
-    padding: 2rem;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    position: relative;
-    gap: 1rem;
-    width: 100%;
-    max-width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: 1;
   }
   .button__close {
     position: absolute;
@@ -154,11 +161,31 @@
       max-width: 30vw;
     }
     .modal__lg {
-      max-width: 30rem;
+      max-width: 50vw;
     }
     .modal__full {
       max-width: 100%;
       height: 100vh;
     }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  .pop-enter-active,
+  .pop-leave-active {
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+  }
+
+  .pop-enter,
+  .pop-leave-to {
+    opacity: 0;
+    transform: scale(0.3) translateY(-50%);
   }
 </style>
