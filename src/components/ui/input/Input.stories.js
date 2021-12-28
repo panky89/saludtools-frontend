@@ -1,28 +1,28 @@
-import InputText from './InputText.vue'
+import Input from './Input.vue'
 
 export default {
   title: 'Example/Input',
-  component: InputText,
+  component: Input,
   argTypes: {},
 }
 
 const Template = (args) => ({
-  components: { InputText },
+  components: { Input },
   setup() {
     return { args: args }
   },
-  template: `<InputText v-bind="args" />`,
+  template: `<Input v-bind="args" />`,
 })
 
 const TemplateForm = (args) => ({
-  components: { InputText },
+  components: { Input },
   setup() {
     return { args: args }
   },
-  template: `<form>
-  <InputText label="name" placeholder="Nombre" class="mt-4" />
-  <InputText label="description" placeholder="Descripcion" class="mt-4" />
-  <InputText label="duration" placeholder="Duracion" class="mt-4" />
+  template: `<form class="p-2">
+  <Input label="name" placeholder="Nombre" class="mt-4" />
+  <Input label="description" placeholder="Descripcion" class="mt-4" type="area" />
+  <Input label="duration" placeholder="Duracion" class="mt-4" type="number" />
   </form>`,
 })
 

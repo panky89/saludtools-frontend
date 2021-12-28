@@ -60,7 +60,7 @@ const TemplateIconText = (args) => ({
 })
 
 export const OnlyIcon = TemplateIcon.bind({})
-OnlyIcon.args = { color: 'gray', size: 'md' }
+OnlyIcon.args = { color: 'gray', size: 'md', onlyIcon: true }
 
 export const OnlyText = TemplateText.bind({})
 OnlyText.args = { color: 'gray', size: 'md' }

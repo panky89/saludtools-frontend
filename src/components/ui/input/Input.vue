@@ -1,20 +1,32 @@
 <template>
-  <div class="input-wrapper">
-    <label
-      :for="name"
-      class="input-label"
-      :class="{ 'input-label__show': value }"
-    >
+  <div
+    class="input-wrapper"
+    :style="{ height: type === 'area' ? '100%' : '40px' }"
+  >
+    <label class="input-label" :for="name" :class="{ block: value }">
       {{ label || placeholder }}
     </label>
 
     <input
-      class="input-text"
-      type="text"
+      v-if="type !== 'area'"
+      class="input"
       :name="name"
       :id="id"
       :placeholder="placeholder"
       :value="value"
+      :type="type"
+      @input="onInput"
+      @keyup.enter="$emit('keyup.enter')"
+    />
+
+    <textarea
+      v-else
+      class="input pt-4"
+      :name="name"
+      :id="id"
+      :placeholder="placeholder"
+      :value="value"
+      cols="4"
       @input="onInput"
       @keyup.enter="$emit('keyup.enter')"
     />
@@ -30,6 +42,7 @@
     placeholder: { type: String, default: '' },
     modelValue: { type: String, default: '' },
     label: { type: String, default: '' },
+    type: { type: String, default: 'text' },
   })
 
   const value = ref('')
@@ -49,21 +62,21 @@
     border-radius: 4px;
     border: 2px solid transparent;
     width: max-content;
-    height: 3.25rem;
     transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
   }
   .input-wrapper:hover {
     background-color: rgb(216, 220, 230);
   }
-  .input-text {
+  .input {
     border: none;
     background-color: transparent;
     outline: none;
     width: 100%;
     height: 100%;
-    padding: 0.15rem 1rem;
     color: rgb(50, 50, 50);
     font-size: 0.9rem;
+    padding: 0 0.5rem;
   }
   .input-wrapper:focus-within {
     border-bottom: 2px solid var(--blue);
@@ -76,17 +89,14 @@
     font-size: 0.8rem;
     position: absolute;
     color: var(--blue);
-    top: 0.25rem;
-    left: 1rem;
+    top: -0.25rem;
+    left: 0.5rem;
     transition: 300ms;
   }
   .input-wrapper:focus-within .input-label {
     display: block;
   }
-  .input-wrapper:focus-within .input-text::placeholder {
+  .input-wrapper:focus-within .input::placeholder {
     color: transparent;
-  }
-  .input-label__show {
-    display: block;
   }
 </style>

@@ -1,7 +1,12 @@
 <template>
   <button
     class="button"
-    :class="{ [`button-${color}`]: true, [`button-${size}`]: true }"
+    :class="{
+      [`button-${color}`]: true,
+      [`button-${size}`]: true,
+      'px-4': !onlyIcon,
+      'button__only-icon': onlyIcon,
+    }"
     :type="type"
     :disabled="disabled"
   >
@@ -32,6 +37,7 @@
     type: { type: String as PropType<Type>, default: 'button' },
     disabled: { type: Boolean, default: false },
     loading: { type: Boolean, default: false },
+    onlyIcon: { type: Boolean, default: false },
   })
 </script>
 
@@ -45,16 +51,16 @@
     position: relative;
   }
   .button-sm {
-    font-size: 0.7rem;
-    height: 1.25rem;
+    font-size: 0.8rem;
+    height: 1.5rem;
   }
   .button-md {
-    font-size: 0.85rem;
-    height: 1.65rem;
+    font-size: 0.95rem;
+    height: 2rem;
   }
   .button-lg {
-    font-size: 1rem;
-    height: 2rem;
+    font-size: 1.1rem;
+    height: 2.5rem;
   }
   .button-blue {
     color: white;
@@ -93,9 +99,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    left: 0;
+    top: 0;
   }
   .button__disabled--loader {
     opacity: 0;
     cursor: not-allowed;
+  }
+  .button__only-icon {
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

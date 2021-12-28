@@ -11,6 +11,7 @@
                 v-if="col.props?.sortable"
                 class="column__sortable"
                 size="sm"
+                onlyIcon
                 @click="sort(col.props?.field)"
               >
                 <Icon>
@@ -27,7 +28,12 @@
 
               <Menu>
                 <template #activator="{ toggle }">
-                  <Button class="column__filter" size="sm" @click="toggle">
+                  <Button
+                    class="column__filter"
+                    onlyIcon
+                    size="sm"
+                    @click="toggle"
+                  >
                     <Icon>
                       <Filter />
                     </Icon>
@@ -35,9 +41,9 @@
                 </template>
 
                 <template #default="{ toggle }">
-                  <InputText placeholder="buscar" @keyup.enter="toggle" />
+                  <Input placeholder="buscar" @keyup.enter="toggle" />
 
-                  <div class="filter__actions">
+                  <div class="filter__actions mt-2">
                     <Button @click="toggle"> Cancelar </Button>
                     <Button color="blue"> Filtrar </Button>
                   </div>
@@ -97,7 +103,7 @@
 
   import Button from '../button/Button.vue'
   import Menu from '../menu/Menu.vue'
-  import InputText from '../input/InputText.vue'
+  import Input from '../input/Input.vue'
   import Spinner from '../spinner/Spinner.vue'
 
   interface Item {
