@@ -21,7 +21,7 @@
 
     <textarea
       v-else
-      class="input pt-4"
+      class="input textarea"
       :name="name"
       :id="id"
       :placeholder="placeholder"
@@ -76,7 +76,11 @@
     height: 100%;
     color: rgb(50, 50, 50);
     font-size: 0.9rem;
-    padding: 0 0.5rem;
+    padding-left: 0.5rem;
+    max-width: calc(100% - 0.5rem);
+  }
+  .textarea {
+    padding-top: 1rem;
   }
   .input-wrapper:focus-within {
     border-bottom: 2px solid var(--blue);
@@ -98,5 +102,6 @@
   }
   .input-wrapper:focus-within .input::placeholder {
     color: transparent;
+    font-size: 0.9rem;
   }
 </style>
