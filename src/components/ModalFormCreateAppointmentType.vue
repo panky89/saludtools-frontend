@@ -1,7 +1,7 @@
 <template>
-  <Modal title="Crear nueva cita" hideFooter>
+  <Modal v-model="isOpen" title="Crear nueva cita" hideFooter>
     <template #activator="{ toggle }">
-      <Button color="blue" @click="toggle">Crear cita</Button>
+      <Button color="blue" @click="toggle">Crear nueva tipo cita</Button>
     </template>
 
     <template #default>
@@ -12,7 +12,7 @@
           type="text"
           name="name"
           :error="errors.name"
-          @blur="validate"
+          @input="validate"
         />
         <Input
           v-model="values.duration"
@@ -20,7 +20,7 @@
           type="number"
           name="duration"
           :error="errors.duration"
-          @blur="validate"
+          @input="validate"
         />
         <Input
           v-model="values.description"
@@ -28,11 +28,16 @@
           type="area"
           name="description"
           :error="errors.description"
-          @blur="validate"
+          @input="validate"
         />
 
         <div class="flex justify-end">
-          <Button color="blue" type="submit" :disabled="!meta.valid">
+          <Button
+            color="blue"
+            type="submit"
+            :loading="isFetching"
+            :disabled="!meta.valid"
+          >
             Guardar
           </Button>
         </div>
@@ -42,11 +47,22 @@
 </template>
 
 <script lang="ts" setup>
-  import useCreateAppointment from '@/hooks/useCreateAppointment'
+  import { ref } from 'vue'
+  import useCreateAppointmentType from '@/hooks/useCreateAppointmentType'
 
-  const { values, validate, meta, errors } = useCreateAppointment()
+  const emit = defineEmits(['refresh'])
+  const isOpen = ref(false)
 
-  async function onSubmit() {}
+  const { form, isFetching, createAppointment } = useCreateAppointmentType()
+  const { values, validate, meta, errors } = form
+
+  async function onSubmit() {
+    if (!(await validate())) return
+
+    await createAppointment()
+    emit('refresh')
+    isOpen.value = false
+  }
 </script>
 
 <style scoped>

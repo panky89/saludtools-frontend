@@ -45,23 +45,22 @@
 </template>
 
 <script lang="ts" setup>
-  import { PropType, ref } from 'vue'
+  import { PropType, ref, watch, watchEffect } from 'vue'
   import { Icon } from '@vicons/utils'
   import { X } from '@vicons/tabler'
-
   import Button from '../button/Button.vue'
 
   type Size = 'sm' | 'md' | 'lg' | 'full'
 
-  defineProps({
-    modalValue: { type: Boolean, default: false },
+  const props = defineProps({
+    modelValue: { type: Boolean, default: false },
     size: { type: String as PropType<Size>, default: 'md' },
     title: { type: String, default: '' },
     hideFooter: { type: Boolean, default: false },
     hideHeader: { type: Boolean, default: false },
   })
 
-  const emit = defineEmits(['accept', 'cancel', 'close'])
+  const emit = defineEmits(['accept', 'cancel', 'close', 'update:modelValue'])
   const isOpen = ref(false)
 
   function toggle() {
@@ -83,6 +82,10 @@
     emit('close')
     isOpen.value = false
   }
+
+  watch(props, () => (isOpen.value = props.modelValue))
+
+  watch(isOpen, () => emit('update:modelValue', isOpen.value))
 </script>
 
 <style scoped>

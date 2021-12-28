@@ -8,7 +8,7 @@
               <span class="column__title">{{ col.props?.header }}</span>
 
               <Button
-                v-if="col.props?.sortable"
+                v-if="col.props?.hasOwnProperty('sortable')"
                 class="column__sortable"
                 size="sm"
                 onlyIcon
@@ -26,7 +26,7 @@
                 </Icon>
               </Button>
 
-              <Menu>
+              <Menu v-if="col.props?.hasOwnProperty('filterable')">
                 <template #activator="{ toggle }">
                   <Button
                     class="column__filter"
@@ -54,7 +54,7 @@
         </tr>
       </thead>
 
-      <tbody class="table__body" role="rowgroup">
+      <tbody v-if="!loading" class="table__body" role="rowgroup">
         <tr v-for="(item, index) in items" :key="index">
           <td v-for="col in columns" :key="col.props?.field">
             <component
@@ -69,7 +69,7 @@
           </td>
         </tr>
 
-        <tr v-if="items.length === 0">
+        <tr v-if="!items || items?.length === 0">
           <td :colspan="columns.length">
             <div class="table__empty">
               <Icon size="48" color="gray">
@@ -165,6 +165,7 @@
     font-size: 2rem;
     background-color: rgba(0, 0, 0, 0.4);
     color: white;
+    min-height: 200px;
   }
   .table {
     width: 100%;

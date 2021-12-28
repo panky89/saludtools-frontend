@@ -10,7 +10,7 @@ const data = [
     duration: 120,
     active: false,
     created_at: '2021-12-28',
-    lastedit_at: '2021-12-24 14:00:00',
+    updated_at: '2021-12-24 14:00:00',
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const data = [
     duration: 120,
     active: false,
     created_at: '2021-12-28',
-    lastedit_at: '2021-12-24 14:00:00',
+    updated_at: '2021-12-24 14:00:00',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const data = [
     duration: 120,
     active: false,
     created_at: '2021-12-28',
-    lastedit_at: '2021-12-24 14:00:00',
+    updated_at: '2021-12-24 14:00:00',
   },
 ]
 

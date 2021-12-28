@@ -1,9 +1,9 @@
 <template>
-  <Appointments />
+  <AppointmentTypes />
 </template>
 
 <script setup lang="ts">
-  import Appointments from './containers/Appointments.vue'
+  import AppointmentTypes from './containers/AppointmentTypes.vue'
 </script>
 
 <style scoped></style>

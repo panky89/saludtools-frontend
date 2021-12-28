@@ -5,5 +5,6 @@
     field: { type: String, required: true },
     header: { type: String, required: true },
     sortable: { type: Boolean, default: false },
+    filterable: { type: Boolean, default: false },
   })
 </script>
